@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         'X-Title': 'My Gemini Chat'
       },
       body: JSON.stringify({
-        model: 'google/gemini-pro:free Gemini Pro',
+        model: 'mistralai/mistral-7b-instruct:free',
         messages: messages
       })
     });
