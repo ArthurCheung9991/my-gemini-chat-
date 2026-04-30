@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         'X-Title': 'My Gemini Chat'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-exp:free',
+        model: 'google/gemini-2.0-flash-001:free',
         messages: messages
       })
     });
