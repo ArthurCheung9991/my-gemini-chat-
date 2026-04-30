@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
@@ -24,35 +23,7 @@ export default async function handler(req, res) {
     
     const history = await historyRes.json();
 
-    let messages = [];
-    history.reverse().forEach(function(h) {
-      messages.push({ role: 'user', content: h.message });
-      messages.push({ role: 'assistant', content: h.response });
-    });
-    messages.push({ role: 'user', content: message });
-
-    const openrouterRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + OPENROUTER_API_KEY,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://my-gemini-chat-jet.vercel.app',
-        'X-Title': 'My Gemini Chat'
-      },
-      body: JSON.stringify({
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
-        messages: messages
-      })
-    });
-
-    const openrouterData = await openrouterRes.json();
-
-    let response = '沒有回應';
-    if (openrouterData.choices && openrouterData.choices.length > 0) {
-      response = openrouterData.choices[0].message.content || '回應為空';
-    } else if (openrouterData.error) {
-      response = 'API 錯誤：' + JSON.stringify(openrouterData.error);
-    }
+    const response = '【測試回應】你說了：' + message + '。這是假回應，用來測試同步功能。';
 
     await fetch(SUPABASE_URL + '/rest/v1/chat_history', {
       method: 'POST',
